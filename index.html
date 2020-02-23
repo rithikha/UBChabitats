@@ -129,7 +129,7 @@
     };
 
 
-    $.getJSON.("ubcv_habitat_classification.geojson",
+    $.getJSON.AJAX("ubcv_habitat_classification.geojson",
     function(data){
       // add GeoJSON layer to the map once the file is loaded
       var datalayer = L.geoJson(data ,{
