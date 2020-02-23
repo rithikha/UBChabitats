@@ -126,7 +126,7 @@
       opacity: 0
     };
 
-    $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubcv-biodiversity/master/Habitat_Classification/ubcv_habitat_classification.geojson",
+    $.getJSON("ubcv_habitat_classification.geojson",
     function(data){
       // add GeoJSON layer to the map once the file is loaded
       var datalayer = L.geoJson(data ,{
