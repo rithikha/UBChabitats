@@ -6,8 +6,7 @@
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
   <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="jquery-2.1.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
 
   <style>
@@ -129,7 +128,7 @@
     };
 
 
-    $.getJSON("ubcv_habitat_classification.geojson",
+    $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubcv-biodiversity/master/Habitat_Classification/ubcv_habitat_classification.geojson",
     function(data){
       // add GeoJSON layer to the map once the file is loaded
       var datalayer = L.geoJson(data ,{
