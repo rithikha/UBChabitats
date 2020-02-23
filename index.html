@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Add styles made with Mapbox Studio to a Leaflet map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+
+  <style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+  <style>
+
+  /*Setup*/
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+html,
+body,
+#mapid {
+  height: 100%;
+  width: 100%;
+}
+
+/*Legend specific*/
+.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  line-height: 24px;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 12px 8px;
+
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+}
+
+.legend i.icon {
+  background-size: 18px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+  </style>
+  <div id='map'></div>
+
+  <script>
+  L.mapbox.accessToken = 'pk.eyJ1Ijoicml0aGlraGEiLCJhIjoiY2s2cG1uY2k2MHlmNzNkcGdmM3lnZ3NqMiJ9.JYJvv1Pq0hfNK-9ot-0_aQ';
+  var map = L.map('map').setView([49.265637, -123.25611], 13.5);
+
+  // Add tiles from the Mapbox Static Tiles API
+  // (https://docs.mapbox.com/api/maps/#static-tiles)
+  // Tiles are 512x512 pixels and are offset by 1 zoom level
+
+  /*Legend specific*/
+  var legend = L.control({ position: "topleft" });
+
+  legend.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    div.innerHTML += "<h4>LEGEND</h4>";
+    div.innerHTML += "<h4></h4>";
+    div.innerHTML += "<h4>UBC Habitats</h4>";
+    div.innerHTML += '<i style="background: #7a554d"></i><span>Cliff</span><br>';
+    div.innerHTML += '<i style="background: #edd078"></i><span>Old Field</span><br>';
+    div.innerHTML += '<i style="background: #b4f4ae"></i><span>Meadow</span><br>';
+    div.innerHTML += '<i style="background: #ff6714"></i><span>Check</span><br>';
+    div.innerHTML += '<i style="background: #16830c"></i><span>Deciduous Forest</span><br>';
+    div.innerHTML += '<i style="background: #f54dc2"></i><span>Park</span><br>';
+    div.innerHTML += '<i style="background: #dbd8c2"></i><span>Urban Old Field</span><br>';
+    div.innerHTML += '<i style="background: #58d066"></i><span>Hedgerow</span><br>';
+    div.innerHTML += '<i style="background: #44ab86"></i><span>Mixedwood Forest</span><br>';
+    div.innerHTML += '<i style="background: #4bdfe7"></i><span>Freshwater Resevoir</span><br>';
+    div.innerHTML += '<i style="background: #d9a2eb"></i><span>Urban Park</span><br>';
+    div.innerHTML += '<i style="background: #717484"></i><span>Hardscape</span><br>';
+    div.innerHTML += '<i style="background: #a6a0a6"></i><span>Developed</span><br>';
+    div.innerHTML += '<i style="background: #337149"></i><span>Coniferous Forest</span><br>';
+    div.innerHTML += "<h4></h4>";
+    div.innerHTML += "<h4>Land Use & Cover</h4>";
+    div.innerHTML += '<i style="background: #3470ad"></i><span>Water</span><br>';
+    div.innerHTML += '<i style="background: #e5fbea"></i><span>Undeveloped Land</span><br>';
+    div.innerHTML += '<i style="background: #e3e3e3"></i><span>Developed Land</span><br>';
+    div.innerHTML += '<i style="background: #FFFFFF"></i><span>Roads & Buildings</span><br>';
+
+    return div;
+  };
+
+  legend.addTo(map);
+  L.tileLayer(
+    'https://api.mapbox.com/styles/v1/rithikha/ck6yksvue2q0h1in5jya99fuu/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+      tileSize: 512,
+      zoomOffset: -1,
+      attribution: '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var myStyle = {
+          weight: 0.5,
+          opacity: 0
+};
+
+    $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubcv-biodiversity/master/Habitat_Classification/ubcv_habitat_classification.geojson",
+    function(data){
+      // add GeoJSON layer to the map once the file is loaded
+      var datalayer = L.geoJson(data ,{
+        style: myStyle,
+        onEachFeature: function(feature, featureLayer) {
+          featureLayer.bindPopup(feature.properties.HABITAT);
+        }
+      }).addTo(map);
+    });
+
+
+
+
+
+
+
+
+
+    // "https://raw.githubusercontent.com/UBCGeodata/ubcv-biodiversity/master/Habitat_Classification/ubcv_habitat_classification.geojson"
+
+
+    </script>
+  </body>
+  </html>
