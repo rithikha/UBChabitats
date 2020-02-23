@@ -126,7 +126,7 @@
       opacity: 0
     };
 
-    $.getJSON("ubcv_habitat_classification.geojson",
+    $.getJSON("https://github.com/rithikha/UBChabitats/blob/master/ubcv_habitat_classification.geojson",
     function(data){
       // add GeoJSON layer to the map once the file is loaded
       var datalayer = L.geoJson(data ,{
@@ -136,17 +136,6 @@
         }
       }).addTo(map);
     });
-
-
-
-
-
-
-
-
-
-    // "https://raw.githubusercontent.com/UBCGeodata/ubcv-biodiversity/master/Habitat_Classification/ubcv_habitat_classification.geojson"
-
 
     </script>
   </body>
