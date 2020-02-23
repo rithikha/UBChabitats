@@ -134,7 +134,7 @@
       var datalayer = L.geoJson(data ,{
         style: myStyle,
         onEachFeature: function(feature, featureLayer) {
-          featureLayer.bindPopup(feature.properties.HABITAT);
+          featureLayer.bindPopup(feature.properties.HABITAT + " - " + feature.properties.LOCATION);
         }
       }).addTo(map);
     });
